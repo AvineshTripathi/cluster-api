@@ -686,6 +686,10 @@ ALL_VERIFY_CHECKS = licenses boilerplate shellcheck tiltfile modules gen convers
 .PHONY: verify
 verify: $(addprefix verify-,$(ALL_VERIFY_CHECKS)) lint-dockerfiles ## Run all verify-* targets
 
+.PHONY: verify-go-directive
+verify-go-directive:
+	TRACE=$(TRACE) ./hack/verify-go-directive.sh -g 1.21
+
 .PHONY: verify-modules
 verify-modules: generate-modules  ## Verify go modules are up to date
 	@if !(git diff --quiet HEAD -- go.sum go.mod $(TOOLS_DIR)/go.mod $(TOOLS_DIR)/go.sum $(TEST_DIR)/go.mod $(TEST_DIR)/go.sum); then \
